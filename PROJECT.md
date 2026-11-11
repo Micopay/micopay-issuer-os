@@ -1,362 +1,362 @@
-# Proyecto MicoPay Issuer OS
+# MicoPay Issuer OS Project
 
-**Fecha:** 30 de octubre de 2026  
-**Estado:** propuesta para revisión  
-**Propietario conceptual:** MicoPay
+**Date:** October 30, 2026  
+**Status:** proposal under review  
+**Conceptual owner:** MicoPay
 
-## 1. Resumen ejecutivo
+## 1. Executive summary
 
-MicoPay Issuer OS es una plataforma para operar activos digitales respaldados y productos financieros componibles. Su función principal no es poseer todas las reservas, sino coordinar de forma verificable a los emisores, custodios, redes de liquidación, proveedores de identidad y aplicaciones que utilizan esos activos.
+MicoPay Issuer OS is a platform for operating backed digital assets and composable financial products. Its main function is not to hold every reserve, but to verifiably coordinate the issuers, custodians, settlement networks, identity providers and applications that use those assets.
 
-La oportunidad surge de combinar cuatro capacidades que hoy existen por separado:
+The opportunity comes from combining four capabilities that exist separately today:
 
-1. Stellar permite emitir, transferir, autorizar y quemar activos.
-2. Etherfuse ofrece activos relacionados con CETES, liquidez en MXN y conectividad con SPEI.
-3. MicoPay ya desarrolla wallet móvil, firma segura, KYC, escrow y flujos de pagos.
-4. ISO 20022 aporta un lenguaje financiero interoperable para representar pagos, estados, devoluciones y conciliación.
+1. Stellar makes it possible to issue, transfer, authorize and burn assets.
+2. Etherfuse offers CETES-related assets, MXN liquidity and SPEI connectivity.
+3. MicoPay already develops a mobile wallet, secure signing, KYC, escrow and payment flows.
+4. ISO 20022 provides an interoperable financial language for representing payments, statuses, returns and reconciliation.
 
-El producto propuesto une esas piezas mediante contabilidad, políticas operativas, conciliación y paneles para múltiples emisores.
+The proposed product brings those pieces together through accounting, operating policies, reconciliation and dashboards for multiple issuers.
 
-## 2. Problema
+## 2. Problem
 
-Emitir un token es técnicamente sencillo. Operarlo de forma confiable no lo es.
+Issuing a token is technically simple. Operating it reliably is not.
 
-Un emisor necesita demostrar continuamente que:
+An issuer needs to continuously demonstrate that:
 
-- los tokens en circulación coinciden con sus obligaciones;
-- las obligaciones están cubiertas por reservas válidas;
-- cada emisión tiene un depósito o activo que la respalda;
-- cada redención quema o retira el token correspondiente;
-- las transferencias bancarias, movimientos en cadena y asientos contables representan la misma operación;
-- ninguna persona puede emitir, redimir o liberar reservas por sí sola sin controles;
-- existe evidencia suficiente para investigar diferencias y realizar auditorías.
+- the tokens in circulation match its liabilities;
+- the liabilities are covered by valid reserves;
+- every issuance has a deposit or asset backing it;
+- every redemption burns or withdraws the corresponding token;
+- bank transfers, on-chain movements and accounting entries represent the same operation;
+- no single person can issue, redeem or release reserves alone without controls;
+- there is enough evidence to investigate discrepancies and carry out audits.
 
-Las blockchains muestran movimientos en cadena, pero no sustituyen la contabilidad, la custodia, la conciliación bancaria ni la responsabilidad legal del emisor.
+Blockchains show on-chain movements, but they do not replace the issuer's accounting, custody, bank reconciliation or legal responsibility.
 
-## 3. Propuesta de valor
+## 3. Value proposition
 
-MicoPay Issuer OS proporciona una capa operativa neutral para:
+MicoPay Issuer OS provides a neutral operating layer for:
 
-- empresas que desean emitir su propio activo;
-- instituciones que administran sus propias reservas;
-- custodios o entidades reguladas que operan por cuenta de terceros;
-- aplicaciones que utilizan activos emitidos por otra organización;
-- comercios y productos como MicoPay Coffee;
-- wallets que necesitan entradas y salidas en MXN;
-- auditores y equipos de cumplimiento.
+- companies that want to issue their own asset;
+- institutions that manage their own reserves;
+- custodians or regulated entities operating on behalf of third parties;
+- applications that use assets issued by another organization;
+- merchants and products such as MicoPay Coffee;
+- wallets that need MXN inflows and outflows;
+- auditors and compliance teams.
 
-MicoPay aporta el software y la coordinación. Cada despliegue define quién conserva las reservas, quién controla las claves, quién puede emitir y quién tiene la obligación de redimir.
+MicoPay provides the software and the coordination. Each deployment defines who holds the reserves, who controls the keys, who can issue and who is obligated to redeem.
 
-## 4. Modelos de operación
+## 4. Operating models
 
-### 4.1 Autocustodia
+### 4.1 Self-custody
 
-El usuario controla su wallet y firma desde la APK. MicoPay prepara y transmite operaciones, pero no puede mover los fondos unilateralmente.
+The user controls their wallet and signs from the APK. MicoPay prepares and submits operations, but cannot move funds unilaterally.
 
-### 4.2 Custodia del emisor
+### 4.2 Issuer custody
 
-Una empresa administra sus reservas, claves institucionales y obligación de redención. MicoPay proporciona el sistema operativo, reglas, conciliación y paneles.
+A company manages its reserves, institutional keys and redemption obligation. MicoPay provides the operating system, rules, reconciliation and dashboards.
 
-### 4.3 Custodia de un tercero autorizado
+### 4.3 Authorized third-party custody
 
-Un banco, IFPE, custodio u otra entidad autorizada conserva los fondos. MicoPay se integra mediante APIs y refleja el estado operativo sin apropiarse de las reservas.
+A bank, IFPE, custodian or other authorized entity holds the funds. MicoPay integrates through APIs and reflects the operating state without taking control of the reserves.
 
-### 4.4 Modelo híbrido
+### 4.4 Hybrid model
 
-Una aplicación mantiene saldos operativos custodiados para pagos frecuentes, pero permite retiros hacia wallets autocustodiadas. Los límites y responsabilidades deben mostrarse claramente al usuario.
+An application keeps custodied operating balances for frequent payments, but allows withdrawals to self-custodied wallets. Limits and responsibilities must be shown clearly to the user.
 
-## 5. Arquitectura conceptual
+## 5. Conceptual architecture
 
 ```text
-┌──────────────────────────────── Productos ────────────────────────────────┐
-│ MicoPay Coffee │ APK/Wallet │ Comercios │ Emisores │ APIs empresariales │
+┌──────────────────────────────── Products ─────────────────────────────────┐
+│ MicoPay Coffee │ APK/Wallet │ Merchants │ Issuers │ Enterprise APIs      │
 └───────────────────────────────┬───────────────────────────────────────────┘
                                 │
 ┌──────────────────────── MicoPay Issuer OS ────────────────────────────────┐
-│ Identidad y permisos                                                    │
-│ Órdenes de pago, emisión, quema y redención                             │
-│ Libro contable de doble partida                                         │
-│ Conciliación de tres vías                                               │
-│ Límites, aprobaciones y motor de políticas                              │
-│ Registro de auditoría y evidencia                                       │
-│ Panel de activos, pasivos, cobertura y liquidez                         │
-│ Modelo canónico inspirado en ISO 20022                                  │
+│ Identity and permissions                                                │
+│ Payment, issuance, burn and redemption orders                           │
+│ Double-entry ledger                                                     │
+│ Three-way reconciliation                                                │
+│ Limits, approvals and policy engine                                     │
+│ Audit log and evidence                                                  │
+│ Dashboard for assets, liabilities, coverage and liquidity               │
+│ Canonical model inspired by ISO 20022                                   │
 └───────────────┬─────────────────────┬─────────────────────┬───────────────┘
                 │                     │                     │
         ┌───────▼────────┐    ┌───────▼────────┐    ┌───────▼────────┐
-        │ Stellar       │    │ Reservas       │    │ Rieles fiat    │
-        │ tokens/SAC    │    │ CETES/custodia │    │ SPEI/bancos    │
+        │ Stellar        │    │ Reserves       │    │ Fiat rails     │
+        │ tokens/SAC     │    │ CETES/custody  │    │ SPEI/banks     │
         └────────────────┘    └────────────────┘    └────────────────┘
 ```
 
-## 6. Conciliación de tres vías
+## 6. Three-way reconciliation
 
-Cada emisor tendrá tres fuentes de verdad que deben coincidir:
+Each issuer will have three sources of truth that must match:
 
-1. **Cadena:** oferta en circulación, balances, tokens bloqueados y tokens quemados.
-2. **Contabilidad:** obligaciones con usuarios, operaciones pendientes, comisiones y patrimonio.
-3. **Reservas:** efectivo, CETES, cuentas por liquidar y posiciones mantenidas por custodios.
+1. **Chain:** circulating supply, balances, locked tokens and burned tokens.
+2. **Accounting:** liabilities to users, pending operations, fees and equity.
+3. **Reserves:** cash, CETES, receivables pending settlement and positions held by custodians.
 
-El motor de conciliación debe detectar:
+The reconciliation engine must detect:
 
-- emisión sin reserva confirmada;
-- reserva recibida sin emisión correspondiente;
-- quema sin pago de redención;
-- pago de redención sin quema definitiva;
-- duplicados o reintentos;
-- diferencias de redondeo;
-- movimientos bancarios no identificados;
-- eventos en cadena asociados al emisor, contrato o activo incorrecto.
+- issuance without confirmed reserves;
+- reserves received without a corresponding issuance;
+- a burn without a redemption payment;
+- a redemption payment without a final burn;
+- duplicates or retries;
+- rounding differences;
+- unidentified bank movements;
+- on-chain events tied to the wrong issuer, contract or asset.
 
-Una diferencia abierta puede bloquear automáticamente nuevas emisiones o redenciones según su severidad.
+An open discrepancy can automatically block new issuances or redemptions depending on its severity.
 
-## 7. Contabilidad
+## 7. Accounting
 
-La plataforma requiere un libro de doble partida. No basta con calcular balances a partir de eventos de Stellar.
+The platform requires a double-entry ledger. Calculating balances from Stellar events is not enough.
 
-En un modelo típico de token 1:1:
+In a typical 1:1 token model:
 
-- los activos de reserva representan recursos del emisor o del vehículo correspondiente;
-- los tokens redimibles representan una obligación, conforme a la estructura legal aplicable;
-- una emisión aumenta simultáneamente la reserva reconocida y la obligación;
-- una redención reduce la obligación y, cuando corresponde, libera o entrega la reserva;
-- comisiones, rendimiento y diferencias de valuación se registran por separado.
+- reserve assets represent resources of the issuer or of the relevant vehicle;
+- redeemable tokens represent a liability, according to the applicable legal structure;
+- an issuance simultaneously increases the recognized reserve and the liability;
+- a redemption reduces the liability and, where applicable, releases or delivers the reserve;
+- fees, yield and valuation differences are recorded separately.
 
-Cada emisor necesita:
+Each issuer needs:
 
-- catálogo de cuentas configurable;
-- moneda funcional;
-- reglas de valuación;
-- periodos y cierres;
-- asientos reversibles, nunca edición destructiva;
-- referencias cruzadas a operaciones externas;
-- exportación para el sistema contable elegido;
-- separación entre saldos disponibles, bloqueados y pendientes.
+- a configurable chart of accounts;
+- a functional currency;
+- valuation rules;
+- periods and closings;
+- reversible entries, never destructive edits;
+- cross-references to external operations;
+- exports for the accounting system of choice;
+- separation between available, locked and pending balances.
 
-La clasificación contable y fiscal definitiva debe validarse con especialistas mexicanos para cada estructura jurídica.
+The final accounting and tax classification must be validated with Mexican specialists for each legal structure.
 
-## 8. Panel de activos y obligaciones
+## 8. Assets and liabilities dashboard
 
-El panel debe mostrar, como mínimo:
+The dashboard must show, at a minimum:
 
-- tokens emitidos y en circulación;
-- tokens en tesorería, bloqueados o pendientes de quema;
-- solicitudes de emisión y redención pendientes;
-- valor de las reservas por tipo y custodio;
-- efectivo disponible inmediatamente;
-- activos con liquidación T+1 o posterior;
-- cobertura total y cobertura líquida;
-- rendimiento generado y destinatario económico del rendimiento;
-- movimientos SPEI pendientes, confirmados, devueltos o rechazados;
-- diferencias de conciliación;
-- operaciones que requieren aprobación;
-- estado de KYC/KYB y límites aplicables;
-- evidencia y fecha de la última atestación.
+- tokens issued and in circulation;
+- tokens in treasury, locked or pending burn;
+- pending issuance and redemption requests;
+- reserve value by type and custodian;
+- immediately available cash;
+- assets with T+1 or later settlement;
+- total coverage and liquid coverage;
+- yield generated and the economic recipient of that yield;
+- pending, confirmed, returned or rejected SPEI movements;
+- reconciliation discrepancies;
+- operations that require approval;
+- KYC/KYB status and applicable limits;
+- evidence and date of the latest attestation.
 
-El panel no es solo informativo: debe impedir operaciones cuando una política crítica no se cumple.
+The dashboard is not just informational: it must prevent operations when a critical policy is not met.
 
 ## 9. ISO 20022
 
-ISO 20022 se utilizará como referencia semántica, no necesariamente como formato interno XML.
+ISO 20022 will be used as a semantic reference, not necessarily as an internal XML format.
 
-El modelo canónico conservará:
+The canonical model will keep:
 
-- ordenante y beneficiario;
-- cuentas e instituciones participantes;
-- importe, moneda y comisiones;
-- propósito y datos de remesa;
-- identificadores de instrucción, operación y extremo a extremo;
-- estados, rechazos, devoluciones y reembolsos;
-- fechas de creación, autorización, liquidación y acreditación.
+- debtor and creditor;
+- participating accounts and institutions;
+- amount, currency and fees;
+- purpose and remittance data;
+- instruction, transaction and end-to-end identifiers;
+- statuses, rejections, returns and refunds;
+- creation, authorization, settlement and crediting dates.
 
-Para México también se conservarán sin pérdida:
+For Mexico, the following will also be kept without loss:
 
-- clave de rastreo SPEI;
-- referencia numérica;
-- CLABE o cuenta beneficiaria;
-- instituciones emisora y receptora;
-- CEP y evidencia asociada;
-- estado y motivo de devolución del proveedor.
+- SPEI tracking key (clave de rastreo);
+- numeric reference;
+- beneficiary CLABE or account;
+- sending and receiving institutions;
+- CEP and associated evidence;
+- the provider's return status and reason.
 
-Cada operación tendrá un identificador interno inmutable y una colección de identificadores externos:
+Each operation will have an immutable internal identifier and a collection of external identifiers:
 
 ```text
 operation_id
 ├── Stellar transaction hash
-├── contrato y activo exactos
+├── exact contract and asset
 ├── Etherfuse transaction ID
-├── clave de rastreo SPEI
-├── referencia numérica
+├── SPEI tracking key
+├── numeric reference
 ├── CEP
-└── EndToEndId u otro identificador ISO, cuando exista
+└── EndToEndId or another ISO identifier, when available
 ```
 
-## 10. Seguridad y gobierno
+## 10. Security and governance
 
-- claves institucionales protegidas mediante HSM, MPC o controles equivalentes;
-- claves de usuario protegidas mediante Android Keystore cuando la firma sea móvil;
-- aprobaciones de cuatro ojos para emisión y liberación de reservas;
-- roles separados para operación, tesorería, cumplimiento y auditoría;
-- límites por importe, activo, emisor, usuario y periodo;
-- idempotencia en todas las operaciones financieras;
-- registro de auditoría append-only;
-- alertas por discrepancias y operaciones atípicas;
-- recuperación probada y procedimientos de continuidad;
-- identificación obligatoria por red, emisor, contrato, activo y operación.
+- institutional keys protected by HSM, MPC or equivalent controls;
+- user keys protected by Android Keystore when signing happens on mobile;
+- four-eyes approvals for issuance and reserve release;
+- separate roles for operations, treasury, compliance and audit;
+- limits by amount, asset, issuer, user and period;
+- idempotency in every financial operation;
+- append-only audit log;
+- alerts for discrepancies and unusual operations;
+- tested recovery and business continuity procedures;
+- mandatory identification by network, issuer, contract, asset and operation.
 
-## 11. Integraciones iniciales
+## 11. Initial integrations
 
 ### Stellar
 
-- emisión y distribución;
-- transferencias y quema;
-- flags de autorización y clawback cuando sean legalmente necesarios;
-- multisig y separación de funciones;
-- Stellar Asset Contract para interoperabilidad con contratos.
+- issuance and distribution;
+- transfers and burns;
+- authorization and clawback flags when legally required;
+- multisig and segregation of duties;
+- Stellar Asset Contract for interoperability with contracts.
 
 ### Etherfuse
 
-- CETES y otros activos disponibles;
-- cotización y conversión;
-- entrada y salida en MXN;
-- estados y webhooks de operaciones;
-- evidencia de redención y liquidación.
+- CETES and other available assets;
+- quotes and conversion;
+- MXN inflows and outflows;
+- operation statuses and webhooks;
+- redemption and settlement evidence.
 
-### SPEI o proveedor bancario
+### SPEI or banking provider
 
-- instrucciones de pago;
-- clave de rastreo y referencias;
-- confirmación de acreditación;
+- payment instructions;
+- tracking key and references;
+- crediting confirmation;
 - CEP;
-- devoluciones, rechazos y conciliación.
+- returns, rejections and reconciliation.
 
-### Identidad
+### Identity
 
-- KYC/KYB mediante proveedor configurable;
-- restricciones por país, producto y nivel de riesgo;
-- conservación de referencias y resultados necesarios, minimizando datos sensibles.
+- KYC/KYB through a configurable provider;
+- restrictions by country, product and risk level;
+- retention of the necessary references and results, minimizing sensitive data.
 
-## 12. Relación con MicoPay Coffee
+## 12. Relationship with MicoPay Coffee
 
-MicoPay Coffee puede funcionar como el primer producto vertical sobre Issuer OS.
+MicoPay Coffee can serve as the first vertical product on top of Issuer OS.
 
-Una compra puede producir:
+A purchase can produce:
 
-1. una orden de pago;
-2. una autorización del usuario;
-3. una transferencia o reserva de saldo;
-4. asientos para comercio, plataforma y comisiones;
-5. liquidación al comercio;
-6. conciliación contra Stellar o SPEI;
-7. comprobante y evidencia de auditoría.
+1. a payment order;
+2. a user authorization;
+3. a transfer or balance hold;
+4. entries for the merchant, the platform and fees;
+5. settlement to the merchant;
+6. reconciliation against Stellar or SPEI;
+7. a receipt and audit evidence.
 
-Coffee valida el núcleo con un caso real y cotidiano. El mismo núcleo puede reutilizarse posteriormente para recompensas, nómina, wallets de marca blanca, comercios y emisores institucionales.
+Coffee validates the core with a real, everyday use case. The same core can later be reused for rewards, payroll, white-label wallets, merchants and institutional issuers.
 
-## 13. Relación con sistemas existentes de MicoPay
+## 13. Relationship with existing MicoPay systems
 
-- **MicoPay Protocol:** contiene el producto transaccional actual, backend, APK y escrow. Issuer OS no debe duplicarlo sin una migración deliberada.
-- **MicoPay Bridge:** aloja las iniciativas de bridge, x402, agentes y componentes relacionados que fueron separados del protocolo principal.
-- **MicoPay Issuer OS:** será la capa financiera multiemisor, contable y de conciliación descrita en este documento.
+- **MicoPay Protocol:** contains the current transactional product, backend, APK and escrow. Issuer OS must not duplicate it without a deliberate migration.
+- **MicoPay Bridge:** hosts the bridge, x402, agent and related initiatives that were split off from the main protocol.
+- **MicoPay Issuer OS:** will be the multi-issuer financial, accounting and reconciliation layer described in this document.
 
-Las integraciones deben realizarse mediante APIs y eventos versionados. Ningún repositorio debe depender directamente de tablas internas de otro sistema.
+Integrations must happen through versioned APIs and events. No repository should depend directly on another system's internal tables.
 
-## 14. Estrategia de implementación
+## 14. Implementation strategy
 
-### Fase 0 — Descubrimiento y límites
+### Phase 0 — Discovery and boundaries
 
-- definir actores y responsabilidades legales;
-- elegir el primer emisor y activo de prueba;
-- confirmar capacidades contractuales de Etherfuse;
-- validar tratamiento contable con especialistas;
-- definir modelo de amenazas y custodia.
+- define actors and legal responsibilities;
+- choose the first test issuer and asset;
+- confirm Etherfuse's contractual capabilities;
+- validate the accounting treatment with specialists;
+- define the threat and custody model.
 
-### Fase 1 — Libro y modelo canónico
+### Phase 1 — Ledger and canonical model
 
-- crear operaciones e identificadores internos;
-- implementar libro de doble partida;
-- definir estados y eventos idempotentes;
-- crear adaptador de lectura de Stellar;
-- conciliar oferta en cadena contra el libro.
+- create operations and internal identifiers;
+- implement the double-entry ledger;
+- define idempotent statuses and events;
+- build a Stellar read adapter;
+- reconcile on-chain supply against the ledger.
 
-### Fase 2 — Reservas y redención
+### Phase 2 — Reserves and redemption
 
-- integrar proveedor de reservas;
-- implementar emisión contra evidencia;
-- implementar quema y redención;
-- separar liquidez inmediata de activos T+1;
-- bloquear operaciones ante diferencias críticas.
+- integrate a reserve provider;
+- implement issuance against evidence;
+- implement burn and redemption;
+- separate immediate liquidity from T+1 assets;
+- block operations when critical discrepancies exist.
 
-### Fase 3 — SPEI y México
+### Phase 3 — SPEI and Mexico
 
-- integrar entrada y salida bancaria;
-- conservar clave de rastreo, CEP y estados;
-- manejar devoluciones y duplicados;
-- producir exportaciones contables y evidencia de auditoría.
+- integrate bank inflows and outflows;
+- keep the tracking key, CEP and statuses;
+- handle returns and duplicates;
+- produce accounting exports and audit evidence.
 
-### Fase 4 — Panel y multiemisor
+### Phase 4 — Dashboard and multi-issuer
 
-- panel de activos y obligaciones;
-- separación por organización;
-- roles y aprobaciones;
-- portal de auditoría;
-- incorporación controlada de un segundo emisor.
+- assets and liabilities dashboard;
+- per-organization separation;
+- roles and approvals;
+- audit portal;
+- controlled onboarding of a second issuer.
 
-### Fase 5 — Productos componibles
+### Phase 5 — Composable products
 
-- integrar MicoPay Coffee;
-- APIs para wallets y comercios;
-- conectores alternativos de custodia y reservas;
-- despliegues dedicados o administrados por el cliente.
+- integrate MicoPay Coffee;
+- APIs for wallets and merchants;
+- alternative custody and reserve connectors;
+- dedicated or customer-managed deployments.
 
-## 15. Criterios de aceptación iniciales
+## 15. Initial acceptance criteria
 
-- ninguna emisión puede quedar sin un asiento balanceado y evidencia de reserva;
-- ninguna redención se marca completada antes de la quema y el pago confirmados;
-- los reintentos no crean emisiones, pagos ni asientos duplicados;
-- una discrepancia identifica exactamente emisor, red, contrato, activo y operación;
-- cada saldo del panel puede explicarse mediante asientos y evidencia externa;
-- las reservas de dos emisores nunca se consolidan como si fueran intercambiables;
-- un auditor de solo lectura puede reconstruir el ciclo completo de una operación;
-- perder temporalmente un proveedor no destruye el historial ni inventa estados finales.
+- no issuance can exist without a balanced entry and reserve evidence;
+- no redemption is marked complete before the burn and payment are confirmed;
+- retries do not create duplicate issuances, payments or entries;
+- a discrepancy identifies exactly the issuer, network, contract, asset and operation;
+- every dashboard balance can be explained through entries and external evidence;
+- the reserves of two issuers are never consolidated as if they were interchangeable;
+- a read-only auditor can reconstruct the full lifecycle of an operation;
+- temporarily losing a provider does not destroy history or invent final statuses.
 
-## 16. Riesgos principales
+## 16. Main risks
 
-1. **Custodia accidental:** asumir responsabilidades de custodia o redención sin haberlas diseñado o autorizado.
-2. **Contabilidad incorrecta:** confundir eventos en cadena con asientos contables definitivos.
-3. **Desfase de liquidez:** prometer redención inmediata cuando la reserva requiere T+1.
-4. **Claves comprometidas:** permitir emisión o quema con una sola credencial operativa.
-5. **Dependencia de proveedor:** construir todo alrededor de una única API de reservas o rampa.
-6. **Datos ambiguos:** identificar activos solamente por ticker y no por red, emisor y contrato.
-7. **Mezcla de reservas:** usar liquidez de un emisor para cubrir obligaciones de otro.
-8. **Regulación cambiante:** diseñar una interfaz que prometa un tratamiento jurídico universal.
-9. **Complejidad prematura:** implementar todos los mensajes ISO 20022 antes de necesitarlos.
+1. **Accidental custody:** taking on custody or redemption responsibilities without having designed or authorized them.
+2. **Incorrect accounting:** confusing on-chain events with final accounting entries.
+3. **Liquidity mismatch:** promising immediate redemption when the reserve requires T+1.
+4. **Compromised keys:** allowing issuance or burns with a single operational credential.
+5. **Provider dependency:** building everything around a single reserve or ramp API.
+6. **Ambiguous data:** identifying assets only by ticker rather than by network, issuer and contract.
+7. **Commingled reserves:** using one issuer's liquidity to cover another's liabilities.
+8. **Changing regulation:** designing an interface that promises a universal legal treatment.
+9. **Premature complexity:** implementing every ISO 20022 message before it is needed.
 
-## 17. Decisiones recomendadas
+## 17. Recommended decisions
 
-- construir un núcleo neutral a proveedores;
-- usar Etherfuse como primer adaptador mexicano, no como única fuente posible;
-- estudiar Brale como referencia y posible conector, no copiarlo como dependencia central;
-- mantener la custodia como una configuración explícita por producto;
-- comenzar con un activo y un emisor antes de habilitar multiemisor;
-- mantener el escrow simple y separado de la contabilidad de reservas;
-- adoptar compatibilidad semántica ISO 20022 desde el diseño del modelo;
-- no describir ninguna función propuesta como implementada hasta contar con pruebas.
+- build a provider-neutral core;
+- use Etherfuse as the first Mexican adapter, not as the only possible source;
+- study Brale as a reference and possible connector, not copy it as a central dependency;
+- keep custody as an explicit per-product configuration;
+- start with one asset and one issuer before enabling multi-issuer;
+- keep the escrow simple and separate from reserve accounting;
+- adopt ISO 20022 semantic compatibility from the model design onward;
+- do not describe any proposed feature as implemented until it has been tested.
 
-## 18. Preguntas pendientes para revisión
+## 18. Open questions for review
 
-- ¿Cuál será el primer emisor piloto?
-- ¿El primer activo será MEXe, MXNe, CETES u otro activo de prueba?
-- ¿Quién asumirá contractualmente la obligación de redención?
-- ¿Quién controlará las claves de emisión y distribución?
-- ¿Qué parte del rendimiento de CETES corresponde al emisor, al usuario o a la plataforma?
-- ¿Qué proveedor bancario entregará información SPEI y CEP de forma automatizada?
-- ¿Qué sistema contable consumirá las exportaciones?
-- ¿Qué límites obligan a detener emisión o redención?
-- ¿Qué información de reservas puede ser pública y cuál debe permanecer restringida?
-- ¿Coffee utilizará saldo autocustodiado, custodiado o híbrido en su primer piloto?
+- Who will be the first pilot issuer?
+- Will the first asset be MEXe, MXNe, CETES or another test asset?
+- Who will contractually take on the redemption obligation?
+- Who will control the issuing and distribution keys?
+- What share of the CETES yield belongs to the issuer, the user or the platform?
+- Which banking provider will deliver SPEI and CEP information automatically?
+- Which accounting system will consume the exports?
+- Which limits require halting issuance or redemption?
+- Which reserve information can be public and which must remain restricted?
+- Will Coffee use self-custodied, custodied or hybrid balances in its first pilot?
 
-## 19. Resultado esperado
+## 19. Expected outcome
 
-Si se implementa correctamente, MicoPay podrá ofrecer una infraestructura que permita a terceros operar sus propios activos, reservas y redes de distribución, manteniendo separación de responsabilidades y evidencia verificable.
+If implemented correctly, MicoPay will be able to offer infrastructure that lets third parties operate their own assets, reserves and distribution networks, while keeping responsibilities separate and evidence verifiable.
 
-El valor estratégico no proviene únicamente del token. Proviene de convertirse en la capa que conecta emisión, reservas, pagos, contabilidad, cumplimiento, auditoría y productos finales.
+The strategic value does not come from the token alone. It comes from becoming the layer that connects issuance, reserves, payments, accounting, compliance, auditing and end products.

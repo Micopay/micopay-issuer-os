@@ -1,74 +1,74 @@
 # MicoPay Issuer OS
 
-Infraestructura modular para que empresas e instituciones puedan emitir, operar, conciliar y auditar activos digitales respaldados, sin obligar a MicoPay a custodiar las reservas de todos los participantes.
+Modular infrastructure that lets companies and institutions issue, operate, reconcile and audit backed digital assets, without requiring MicoPay to custody every participant's reserves.
 
-> Estado: propuesta de arquitectura para revisión. Este repositorio no representa todavía un producto desplegado ni una oferta regulada.
+> Status: architecture proposal under review. This repository does not yet represent a deployed product or a regulated offering.
 
-## Idea central
+## Core idea
 
-MicoPay Issuer OS busca funcionar como una torre de control entre:
+MicoPay Issuer OS aims to act as a control tower between:
 
-- activos emitidos en Stellar;
-- reservas administradas por cada emisor o por un custodio autorizado;
-- proveedores de liquidez y activos, como Etherfuse;
-- entradas y salidas mediante SPEI;
-- contabilidad, conciliación, cumplimiento y auditoría;
-- productos finales como MicoPay Coffee, wallets y programas de recompensas.
+- assets issued on Stellar;
+- reserves managed by each issuer or by an authorized custodian;
+- liquidity and asset providers, such as Etherfuse;
+- inflows and outflows through SPEI;
+- accounting, reconciliation, compliance and auditing;
+- end products such as MicoPay Coffee, wallets and rewards programs.
 
 ```text
                          MicoPay Issuer OS
-                políticas · contabilidad · auditoría
+                  policies · accounting · audit
                               │
           ┌───────────────────┼───────────────────┐
           ▼                   ▼                   ▼
-   Stellar / tokens    Reservas / Etherfuse   SPEI / bancos
-   emisión y quema      CETES y liquidez      entrada y salida
+   Stellar / tokens    Reserves / Etherfuse   SPEI / banks
+   issuance and burn    CETES and liquidity   inflow and outflow
           │                   │                   │
           └───────────────────┼───────────────────┘
                               ▼
-             Coffee · wallets · emisores · comercios
+             Coffee · wallets · issuers · merchants
 ```
 
-## Principios
+## Principles
 
-1. **Separación por emisor.** Reservas, obligaciones, claves y registros nunca se mezclan entre organizaciones.
-2. **Custodia explícita.** Cada activo declara quién custodia, quién emite, quién firma y quién garantiza la redención.
-3. **Conciliación de tres vías.** La oferta en cadena, la contabilidad del emisor y las reservas deben coincidir.
-4. **No emitir sin respaldo confirmado.** La política de emisión debe depender de evidencia durable y autorizaciones verificables.
-5. **No liberar reservas sin quema confirmada.** Una redención solo concluye cuando las dos partes de la operación son definitivas.
-6. **Infraestructura componible.** Stellar, Etherfuse, bancos, custodios y proveedores de identidad se integran mediante adaptadores sustituibles.
-7. **ISO 20022 como lenguaje interno.** Se adopta su modelo semántico sin obligar a que todas las APIs internas utilicen XML.
-8. **Autocustodia cuando sea posible.** La custodia regulada se incorpora como un modo explícito, no accidental.
+1. **Per-issuer separation.** Reserves, liabilities, keys and records are never commingled across organizations.
+2. **Explicit custody.** Each asset declares who custodies, who issues, who signs and who guarantees redemption.
+3. **Three-way reconciliation.** On-chain supply, the issuer's books and the reserves must match.
+4. **No issuance without confirmed backing.** The issuance policy must depend on durable evidence and verifiable authorizations.
+5. **No reserve release without a confirmed burn.** A redemption only completes when both legs of the operation are final.
+6. **Composable infrastructure.** Stellar, Etherfuse, banks, custodians and identity providers are integrated through replaceable adapters.
+7. **ISO 20022 as the internal language.** Its semantic model is adopted without requiring every internal API to use XML.
+8. **Self-custody where possible.** Regulated custody is added as an explicit mode, not an accidental one.
 
-## Qué reutilizamos
+## What we reuse
 
-- Activos nativos de Stellar y Stellar Asset Contract.
-- Cuentas separadas de emisión y distribución, multisig y controles de autorización.
-- Stellar Anchor Platform y los SEP de autenticación, KYC, depósitos, retiros y cotizaciones.
-- Etherfuse para CETES, liquidez MXN y conectividad con SPEI, sujeto a disponibilidad contractual.
-- MicoPay APK para identidad, wallet y firma protegida por Android Keystore.
-- El backend y el escrow existentes de MicoPay como componentes independientes, no como contabilidad del emisor.
+- Stellar native assets and the Stellar Asset Contract.
+- Separate issuing and distribution accounts, multisig and authorization controls.
+- Stellar Anchor Platform and the SEPs for authentication, KYC, deposits, withdrawals and quotes.
+- Etherfuse for CETES, MXN liquidity and SPEI connectivity, subject to contractual availability.
+- The MicoPay APK for identity, wallet and signing protected by Android Keystore.
+- MicoPay's existing backend and escrow as independent components, not as the issuer's ledger.
 
-## Qué falta construir
+## What remains to be built
 
-- libro contable de doble partida y sublibros por emisor;
-- motor de conciliación entre Stellar, reservas y SPEI;
-- flujos controlados de emisión, quema y redención;
-- panel de activos, obligaciones, cobertura y liquidez;
-- política de aprobaciones, límites y separación de funciones;
-- portal de auditoría y evidencia de reservas y pasivos;
-- adaptadores para custodios, bancos y proveedores de activos;
-- exportaciones contables y regulatorias específicas para México;
-- modelo canónico compatible con ISO 20022.
+- double-entry ledger with per-issuer subledgers;
+- reconciliation engine across Stellar, reserves and SPEI;
+- controlled issuance, burn and redemption flows;
+- dashboard for assets, liabilities, coverage and liquidity;
+- approval policy, limits and segregation of duties;
+- audit portal with evidence of reserves and liabilities;
+- adapters for custodians, banks and asset providers;
+- Mexico-specific accounting and regulatory exports;
+- canonical model compatible with ISO 20022.
 
-## Documentación
+## Documentation
 
-La definición completa, alcance, arquitectura inicial, riesgos y fases se encuentran en [PROJECT.md](./PROJECT.md).
+The full definition, scope, initial architecture, risks and phases are in [PROJECT.md](./PROJECT.md).
 
-## Límites
+## Limitations
 
-Este proyecto describe software financiero. No sustituye el análisis legal, contable, fiscal o regulatorio de cada emisor. La responsabilidad sobre reservas, redención, custodia y cumplimiento deberá asignarse contractualmente y reflejarse técnicamente en cada despliegue.
+This project describes financial software. It does not replace the legal, accounting, tax or regulatory analysis of each issuer. Responsibility for reserves, redemption, custody and compliance must be assigned contractually and reflected technically in each deployment.
 
-## Fecha de la propuesta
+## Proposal date
 
-30 de octubre de 2026.
+October 30, 2026.
