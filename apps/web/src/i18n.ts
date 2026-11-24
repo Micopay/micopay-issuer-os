@@ -95,4 +95,50 @@ const EN: Record<string, string> = {
     'The SPEI payment CEP is missing. A redemption is not marked complete before the burn and the payment are confirmed (PROJECT.md §15).',
   'Regla 3: el saldo bancario no alcanza para pagarla. Los tokens quedan apartados hasta que haya fondos.':
     'Rule 3: the bank balance is not enough to pay it. The tokens stay set aside until funds are available.',
+  // dashboard (IOS-1)
+  'Circulación': 'Circulation',
+  'Incluye {monto} MXEJ apartados para quemar.': 'Includes {monto} MXEJ set aside for burning.',
+  'Saldo bancario disponible en el ejemplo': 'Bank balance available in the example',
+  'Solo el saldo bancario puede pagar por SPEI en el ejemplo.':
+    'Only the bank balance can pay out by SPEI in the example.',
+  'Posiciones': 'Positions',
+  'CETES tokenizados': 'Tokenized CETES',
+  'Valuación simulada': 'Simulated valuation',
+  'Corte: {fecha}.': 'Cut-off: {fecha}.',
+  'Rendimiento de los CETES: por definir (no asignado a nadie).':
+    'CETES yield: to be defined (not assigned to anyone).',
+  'Saldo bancario': 'Bank balance',
+  'Única posición que puede pagar por SPEI en el ejemplo.':
+    'The only position that can pay out by SPEI in the example.',
+  'Conversiones pendientes de CETES a banco': 'Pending CETES-to-bank conversions',
+  'No se suma al respaldo hasta confirmar el abono.':
+    'Not added to backing until the credit is confirmed.',
+  'Indicadores': 'Indicators',
+  'Respaldo total': 'Total backing',
+  'CETES más banco. No incluye conversiones pendientes ni depósitos sin identificar.':
+    'CETES plus bank. Excludes pending conversions and unidentified deposits.',
+  'Cobertura total': 'Total coverage',
+  'Cobertura suficiente': 'Sufficient coverage',
+  'Cobertura insuficiente': 'Insufficient coverage',
+  'Respaldo total entre el pasivo.': 'Total backing over liabilities.',
+  'Cobertura bancaria': 'Bank coverage',
+  'Solo banco': 'Bank only',
+  'Saldo bancario entre el pasivo: lo que puede pagarse por SPEI.':
+    'Bank balance over liabilities: what can be paid out by SPEI.',
+  'Saldo bancario rastreable': 'Traceable bank balance',
+  'Cada partida del banco con su evidencia; las ligadas a una operación abren su detalle.':
+    'Every bank entry with its evidence; entries tied to an operation open its detail.',
+  'Fecha': 'Date',
+  'Concepto': 'Description',
+  'Operación': 'Operation',
+  'Suma de partidas': 'Sum of entries',
+  'Saldo del banco': 'Bank balance',
+  'Cuadra con el saldo': 'Matches the balance',
+  'No cuadra con el saldo': 'Does not match the balance',
+  'Solicitudes pendientes': 'Pending requests',
+  'Solicitudes que aún no están completas; cada folio abre su detalle.':
+    'Requests that are not complete yet; each ID opens its detail.',
+  'No hay solicitudes pendientes en el ejemplo.': 'There are no pending requests in the example.',
+  'Notas del ejemplo': 'Example notes',
+  'Sin atestación registrada en el ejemplo.': 'No attestation recorded in the example.',
 };
