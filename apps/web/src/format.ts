@@ -8,6 +8,11 @@ export const mxn = (v: string | number | null | undefined) => MXN.format(Number(
 export const token = (v: string | number | null | undefined) =>
   new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(v ?? 0));
 export const short = (s: string, n = 6) => (s.length > n * 2 ? `${s.slice(0, n)}…${s.slice(-n)}` : s);
+/** Coverage ratios (e.g. 1.1) as a whole percentage; infinity renders as a dash. */
+export const porcentaje = (v: number) =>
+  Number.isFinite(v)
+    ? new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 0 }).format(v)
+    : '—';
 export const dia = (v: string | Date) =>
   new Date(v).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
 /** Date and time as stored by the simulator (UTC), for lifecycle milestones. */
