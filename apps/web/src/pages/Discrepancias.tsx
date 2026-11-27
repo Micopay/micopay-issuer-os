@@ -226,7 +226,7 @@ export default function Discrepancias() {
                   </div>
                 </td>
                 <td className={tdNum}>
-                  <span className="font-bold">{token(pesos(d.monto))}</span> MXEJ
+                  <span className="font-bold">{token(pesos(d.monto))}</span> {emisor.activo.codigo}
                 </td>
                 <td className={td}>
                   <dl className="space-y-1 text-[12px] min-w-[220px]">

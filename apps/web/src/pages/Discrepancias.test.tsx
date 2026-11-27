@@ -69,7 +69,7 @@ describe('discrepancias panel (IOS-3)', () => {
     expect(within(d01).getByText('Emisora Ejemplo')).toBeTruthy();
     expect(within(d01).getByText('Stellar testnet (ficticia)')).toBeTruthy();
     expect(within(d01).getByText('C-EJEMPLO-CONTRATO-NO-EXISTE')).toBeTruthy();
-    expect(within(d01).getByText('MXEJ')).toBeTruthy();
+    expect(within(d01).getAllByText('MXEJ').length).toBeGreaterThan(0);
     expect(within(d01).getByRole('link', { name: 'OP-0002' }).getAttribute('href')).toBe('/operaciones/OP-0002');
 
     // D-02
