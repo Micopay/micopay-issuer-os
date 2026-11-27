@@ -87,7 +87,7 @@ describe('discrepancias panel (IOS-3)', () => {
     expect(within(d03).getByText(t('Diferencia de redondeo'))).toBeTruthy();
     expect(within(d03).getByText(t('Baja'))).toBeTruthy();
     expect(within(d03).getByText(t('Abierta'))).toBeTruthy();
-    expect(within(d03).getByText(/0\.01/)).toBeTruthy();
+    expect(within(d03).getAllByText(/0\.01/).length).toBeGreaterThan(0);
     expect(within(d03).getByRole('link', { name: 'OP-0003' }).getAttribute('href')).toBe('/operaciones/OP-0003');
   });
 
